@@ -1,0 +1,3 @@
+
+updateFee('LIC_010', 'LIC_BUSINESS_GENERAL', 'FINAL', 1, 'Y');
+updateFee('LIC_020', 'LIC_BUSINESS_GENERAL', 'FINAL', 1, 'Y');

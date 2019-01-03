@@ -1,0 +1,44 @@
+function serviceReqDupeCheck() {
+
+if (matches(currentUserID,'ADMIN')) {
+	showDebug = 1;
+	showMessage= true;
+	}
+
+iRec = null;
+recordArray = new Array();
+recordArray = capIdsGetByAddr();
+aa.print('Length: ' + recordArray.length);
+if (recordArray.length > 0) {
+	for(iRec in recordArray) 
+//start replaced branch: EMSE:ServiceRequestDuplicateCheckLoop
+ {
+vApp = null;
+vApp = recordArray[iRec];
+vCap = aa.cap.getCap(vApp).getOutput();
+vAppTypeString = vCap.getCapType().toString();
+vFileDateObj = vCap.getFileDate();
+bAppTypeMatch = false;
+bASIMatch = false;
+if (appMatch(vAppTypeString) && (vApp.equals(capId) == false)) {
+	bAppTypeMatch = true;
+	}
+
+if (bAppTypeMatch) {
+	sysDateMMDDYYYY = dateFormatted(sysDate.getMonth(),sysDate.getDayOfMonth(),sysDate.getYear(),'MM/DD/YYYY');
+	}
+
+if (bAppTypeMatch) {
+	vFileDate = '' + vFileDateObj.getMonth() + '/' + vFileDateObj.getDayOfMonth() + '/' + vFileDateObj.getYear();
+	}
+
+if (bAppTypeMatch && dateDiff(vFileDate, sysDateMMDDYYYY) < 3) {
+	updateAppStatus('Potential Duplicate','This is a potential duplicate of Record ID: ' + vApp.getCustomID());
+	createCapComment('This is a potential duplicate of Record ID: ' + vApp.getCustomID());
+	}
+
+}
+//end replaced branch: EMSE:ServiceRequestDuplicateCheckLoop;
+	}
+
+}
