@@ -4,6 +4,7 @@ copyParcelGisObjects();
 // aa.finance.reCalculateFees(capId,'CONT',AInfo['Valuation of Work Performed']);
 // DISABLED: ASA:Building/*/*/*:013
 // br_nch('EMSE: ProjectDox');
+// Extra comment
 
 //replaced branch(EMSE:Fees-Building)
 feesBuilding();
