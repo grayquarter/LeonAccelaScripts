@@ -1,4 +1,4 @@
-functuion cclEmailRpt() {
+function cclEmailRpt() {
 	//start replaced branch: EMSE:CCLEmailRpt
 
 	showMessage = true;
