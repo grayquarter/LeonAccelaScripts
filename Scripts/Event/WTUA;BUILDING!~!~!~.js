@@ -27,34 +27,7 @@ if (wfTask == 'Application Submittal' && wfStatus == 'Accepted') {
 }
 
 if (wfTask == 'Quality Check' && wfStatus == 'Invoice Fees') {
-	//start replaced branch: EMSE:AutoInvoiceBuildingFees
-	{
-		showMessage = true;
-		feeItemArray = aa.fee.getFeeItems(capId, null, 'NEW').getOutput();
-		if (feeItemArray) {
-			for (FI in feeItemArray)
-				//start replaced branch: EMSE:InvoiceTheFee
-			{
-				thisFeeCode = feeItemArray[FI].getFeeCod();
-				thisFeeStatus = feeItemArray[FI].getFeeitemStatus();
-				comment('Fee Code = ' + thisFeeCode);
-				comment('Fee Status = ' + thisFeeStatus);
-				if (thisFeeStatus == 'NEW') {
-					invoiceFee(thisFeeCode, 'FINAL');
-				}
-
-			}
-			//end replaced branch: EMSE:InvoiceTheFee;
-		}
-
-		childrenCapId = getChildren('*/*/*/*', capId);
-		if (typeof(childrenCapId) == 'object') {
-			for (eachchild in childrenCapId)
-				invoiceCapFees(childrenCapId[eachchild]);
-		}
-
-	}
-	//end replaced branch: EMSE:AutoInvoiceBuildingFees;
+	autoInvoiceBuildingFees();
 }
 
 showMessage = true;
@@ -295,27 +268,7 @@ if (matches(appTypeArray[1], 'Residential', 'Commercial') && appTypeArray[2] != 
 	capContactResult = aa.people.getCapContactByCapID(capId);
 	conArray = capContactResult.getOutput();
 	for (y in conArray)
-		//start replaced branch: EMSE:EmailRptApplicant
-	{
-		conType = conArray[y].getPeople().contactType;
-		emailAddr = conArray[y].getPeople().email;
-		// DISABLED: EMSE:EmailRptApplicant:02 Old Text
-		// if (emailAddr != undefined && conType =='Applicant') {
-		// 	var myHashMap = aa.util.newHashMap();
-		// 	myHashMap.put('altID',capIDString);
-		// 	sendEmailwAttchmnt('autosender@leoncountyfl.gov',emailAddr,'','APPLICANT NOTIFICATION: The Review for '+capIDString+' is Approved','Permit Applicant,<br><br>Please contact Development Support and Environmental Management Intake Staff at (850) 606-1300 to schedule a time to pick up your permit. Any total fees due are detailed on the Attached report.<br><br>Please call if you have any questions. Thank You.','Project Fee Summary',myHashMap);
-		// 	comment('Email Address is : '+emailAddr);
-		// 	}
-
-		if (emailAddr != undefined && conType == 'Applicant') {
-			var myHashMap = aa.util.newHashMap();
-			myHashMap.put('altID', capIDString);
-			sendEmailwAttchmnt('autosender@leoncountyfl.gov', emailAddr, '', 'APPLICANT NOTIFICATION: The Review for ' + capIDString + ' is Approved', 'Permit Applicant,<br><br>Your permit is ready for pick up and we are located at 435 N. Macomb St 2nd floor. Any total fees due are detailed on the Attached report.<br><br>Please call if you have any questions. Thank You.', 'Project Fee Summary', myHashMap);
-			comment('Email Address is : ' + emailAddr);
-		}
-
-	}
-	//end replaced branch: EMSE:EmailRptApplicant;
+		emailRptApplicant();
 }
 
 // DISABLED: WTUA:Building/*/*/*:0620 Fee Sum Rpt pDox
@@ -369,67 +322,11 @@ if (matches(appTypeArray[2], 'Quick Turn') && wfTask == 'Application Submittal' 
 
 if (matches(appTypeArray[2], 'Quick Turn') && taskStatus('Addressing Review') == 'Approved' && taskStatus('Building Plans Review') == 'Approved' && taskStatus('Contractor License Review') == 'Approved' && isTaskActive('Quality Check') && taskStatus('Quality Check') != 'Note') {
 	email(qtQc, 'noreply@leoncountyfl.gov', 'Quick Turn Permit ' + capIDString + ' Quality Check Review is Ready for action by you', 'The following permit, ' + capIDString + ' is ready for your review');
-
-	//start replaced branch: EMSE:AutoInvoiceBuildingFees
-	{
-		showMessage = true;
-		feeItemArray = aa.fee.getFeeItems(capId, null, 'NEW').getOutput();
-		if (feeItemArray) {
-			for (FI in feeItemArray)
-				//start replaced branch: EMSE:InvoiceTheFee
-			{
-				thisFeeCode = feeItemArray[FI].getFeeCod();
-				thisFeeStatus = feeItemArray[FI].getFeeitemStatus();
-				comment('Fee Code = ' + thisFeeCode);
-				comment('Fee Status = ' + thisFeeStatus);
-				if (thisFeeStatus == 'NEW') {
-					invoiceFee(thisFeeCode, 'FINAL');
-				}
-
-			}
-			//end replaced branch: EMSE:InvoiceTheFee;
-		}
-
-		childrenCapId = getChildren('*/*/*/*', capId);
-		if (typeof(childrenCapId) == 'object') {
-			for (eachchild in childrenCapId)
-				invoiceCapFees(childrenCapId[eachchild]);
-		}
-
-	}
-	//end replaced branch: EMSE:AutoInvoiceBuildingFees;
+	autoInvoiceBuildingFees();
 }
 
 if (matches(appTypeArray[2], 'Quick Turn') && wfTask == 'Quality Check' && wfStatus == 'Ready to Issue') {
-
-	//start replaced branch: EMSE:AutoInvoiceBuildingFees
-	{
-		showMessage = true;
-		feeItemArray = aa.fee.getFeeItems(capId, null, 'NEW').getOutput();
-		if (feeItemArray) {
-			for (FI in feeItemArray)
-				//start replaced branch: EMSE:InvoiceTheFee
-			{
-				thisFeeCode = feeItemArray[FI].getFeeCod();
-				thisFeeStatus = feeItemArray[FI].getFeeitemStatus();
-				comment('Fee Code = ' + thisFeeCode);
-				comment('Fee Status = ' + thisFeeStatus);
-				if (thisFeeStatus == 'NEW') {
-					invoiceFee(thisFeeCode, 'FINAL');
-				}
-
-			}
-			//end replaced branch: EMSE:InvoiceTheFee;
-		}
-
-		childrenCapId = getChildren('*/*/*/*', capId);
-		if (typeof(childrenCapId) == 'object') {
-			for (eachchild in childrenCapId)
-				invoiceCapFees(childrenCapId[eachchild]);
-		}
-
-	}
-	//end replaced branch: EMSE:AutoInvoiceBuildingFees;
+	autoInvoiceBuildingFees();
 }
 
 if (matches(appTypeArray[2], 'Quick Turn') && wfTask == 'Quality Check' && wfStatus == 'Ready to Issue' && isTaskActive('Payment')) {
@@ -440,27 +337,7 @@ if (matches(appTypeArray[2], 'Quick Turn') && wfTask == 'Quality Check' && wfSta
 	capContactResult = aa.people.getCapContactByCapID(capId);
 	conArray = capContactResult.getOutput();
 	for (y in conArray)
-		//start replaced branch: EMSE:EmailRptApplicant
-	{
-		conType = conArray[y].getPeople().contactType;
-		emailAddr = conArray[y].getPeople().email;
-		// DISABLED: EMSE:EmailRptApplicant:02 Old Text
-		// if (emailAddr != undefined && conType =='Applicant') {
-		// 	var myHashMap = aa.util.newHashMap();
-		// 	myHashMap.put('altID',capIDString);
-		// 	sendEmailwAttchmnt('autosender@leoncountyfl.gov',emailAddr,'','APPLICANT NOTIFICATION: The Review for '+capIDString+' is Approved','Permit Applicant,<br><br>Please contact Development Support and Environmental Management Intake Staff at (850) 606-1300 to schedule a time to pick up your permit. Any total fees due are detailed on the Attached report.<br><br>Please call if you have any questions. Thank You.','Project Fee Summary',myHashMap);
-		// 	comment('Email Address is : '+emailAddr);
-		// 	}
-
-		if (emailAddr != undefined && conType == 'Applicant') {
-			var myHashMap = aa.util.newHashMap();
-			myHashMap.put('altID', capIDString);
-			sendEmailwAttchmnt('autosender@leoncountyfl.gov', emailAddr, '', 'APPLICANT NOTIFICATION: The Review for ' + capIDString + ' is Approved', 'Permit Applicant,<br><br>Your permit is ready for pick up and we are located at 435 N. Macomb St 2nd floor. Any total fees due are detailed on the Attached report.<br><br>Please call if you have any questions. Thank You.', 'Project Fee Summary', myHashMap);
-			comment('Email Address is : ' + emailAddr);
-		}
-
-	}
-	//end replaced branch: EMSE:EmailRptApplicant;
+		emailRptApplicant();
 }
 
 if (matches(appTypeArray[2], 'Quick Turn') && wfTask == 'Payment' && matches(wfStatus, 'Payment Processed', 'No Fees Due') && isTaskActive('Permit Issuance')) {
