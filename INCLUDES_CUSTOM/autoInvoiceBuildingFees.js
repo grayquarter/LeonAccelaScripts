@@ -25,6 +25,6 @@ function autoInvoiceBuildingFees()
 				invoiceCapFees(childrenCapId[eachchild]);
 		}
 
-	}
+
 	//end replaced branch: EMSE:AutoInvoiceBuildingFees;
 }
