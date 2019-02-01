@@ -183,7 +183,7 @@ function cclEmailRpt() {
 	if (AInfo['Send Results Letter/EM'] == 'CHECKED') {
 		AprPara = 'Leon County Requires that property that is subject to foreclosure proceedings be registered, and also requires that the mortgagee appoint a local representative.<br><br>';
 	} else {
-		AprPara = ;
+		AprPara = '' ;
 	}
 
 	if (AInfo['APR Req'] == 'Yes') {
