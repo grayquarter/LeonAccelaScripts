@@ -16,8 +16,8 @@ if (requiredInspections && requiredInspections.length == 0) {
 	comment('<font color=red>Waiting for inspections: ' + br + '.  ' + requiredInspections.join(',' + br + '.  ') + '</font>');
 }
 
-logDebug('isTaskActive(' Inspections '): ' + isTaskActive('Inspections'));
-logDebug('isTaskActive(' Certificate of Completeness '): ' + isTaskActive('Certificate of Completeness'));
+logDebug("isTaskActive('Inspections'): " + isTaskActive('Inspections'));
+logDebug("isTaskActive('Certificate of Completeness'): " + isTaskActive('Certificate of Completeness'));
 if (isTaskActive('Inspections') && !exists(inspResult, ['Information', 'Cancelled', 'Pending', 'Scheduled'])) {
 	sendNotification_BLDInspectionResult();
 }
