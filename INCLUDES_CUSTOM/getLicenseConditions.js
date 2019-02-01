@@ -79,4 +79,3 @@ function getLicenseConditions(pType, pStatus, pDesc, pImpact) // optional capID
 
 	return resultArray;
 }
-

@@ -1,5 +1,5 @@
 function isTaskStatus_TPS(wfstr, wfstat) // optional process name
-	{	// 05/29/2018 RS Modified from INCLUDES_ACCELA_FUNCTIONS to optionally include RecordID (capID). 
+{ // 05/29/2018 RS Modified from INCLUDES_ACCELA_FUNCTIONS to optionally include RecordID (capID).
 	var useProcess = false;
 	var processName = "";
 	if (arguments.length > 2 && arguments[2] != null) {
@@ -7,7 +7,8 @@ function isTaskStatus_TPS(wfstr, wfstat) // optional process name
 		useProcess = true;
 	}
 	var capID = capId;
-	if (arguments.length > 3 && arguments[3] != null) capID = arguments[3];
+	if (arguments.length > 3 && arguments[3] != null)
+		capID = arguments[3];
 
 	var workflowResult = aa.workflow.getTaskItems(capID, wfstr, processName, null, wfstat, null);
 	if (workflowResult.getSuccess())
@@ -29,5 +30,3 @@ function isTaskStatus_TPS(wfstr, wfstat) // optional process name
 	}
 	return false;
 }
-
- 

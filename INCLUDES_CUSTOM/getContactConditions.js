@@ -81,4 +81,3 @@ function getContactConditions(pType, pStatus, pDesc, pImpact) // optional capID
 
 	return resultArray;
 }
-

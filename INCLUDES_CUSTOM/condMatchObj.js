@@ -15,12 +15,3 @@ function condMatchObj() {
 	this.arComment = null;
 	this.expireDate = null;
 }
- 
-/*------------------------------------------------------------------------------------------------------/
-|  Author: Pedro Luis Montoya
-|  Created: 2016/10/31
-|  Function: getConditionTemplateModelValue
-|  Summary: Accepts a template model from a CAE Condition, with group name, sub group name, and field 
-|           name. The function will search through the template model by transversing the groups and 
-|           sub groups to find the correct field and returns the value in the field.
-/------------------------------------------------------------------------------------------------------*/

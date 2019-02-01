@@ -1,5 +1,5 @@
 function addFee(fcode, fsched, fperiod, fqty, finvoice) // Adds a single fee, optional argument: fCap
-{	// Modified from INCLUDES_ACCELA_FUNCTION version 9.2
+{ // Modified from INCLUDES_ACCELA_FUNCTION version 9.2
 	// Updated Script will return feeSeq number or null if error encountered (SR5112)
 	var feeCap = capId;
 	var feeCapMessage = "";
@@ -13,8 +13,8 @@ function addFee(fcode, fsched, fperiod, fqty, finvoice) // Adds a single fee, op
 
 	assessFeeResult = aa.finance.createFeeItem(feeCap, fsched, fcode, fperiod, fqty);
 	if (assessFeeResult.getSuccess()) {
-	    feeSeq = assessFeeResult.getOutput();
-		feeMsg = feeSeq + " " + fcode + ", Qty " + fqty + "; Status: " + ((finvoice == "Y") ? "INVOICED" : "NEW") ;
+		feeSeq = assessFeeResult.getOutput();
+		feeMsg = feeSeq + " " + fcode + ", Qty " + fqty + "; Status: " + ((finvoice == "Y") ? "INVOICED" : "NEW");
 		logDebug("Successfully added Fee " + feeMsg + feeCapMessage);
 
 		if (finvoice == "Y" && arguments.length == 5) // use current CAP
@@ -41,5 +41,3 @@ function addFee(fcode, fsched, fperiod, fqty, finvoice) // Adds a single fee, op
 	return feeSeq;
 
 }
-
- 

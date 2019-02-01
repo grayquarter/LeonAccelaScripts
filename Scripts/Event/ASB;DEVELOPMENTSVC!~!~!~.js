@@ -1,5 +1,6 @@
 
 pArr = new Array();
+// TODO: syntax error next line
 loadParcelAttributesFromValidated(ParcelValidatedNumber, pArr;
 if (pArr['ParcelAttribute.PARCEL_CITY_CNTY'] == 'City') {
 	showMessage = true;

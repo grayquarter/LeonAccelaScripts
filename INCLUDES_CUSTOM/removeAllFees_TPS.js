@@ -3,15 +3,19 @@ function removeAllFees_TPS(itemCap) { // Removes all non-invoiced fee items for 
 	var paymentPeriod_L = new Array();
 	var removedFees = new Array();
 
-	exceptionFeeList = [];						// Optional: Array of Fee Codes to exclude
-	if (arguments.length > 1 && arguments[1]) exceptionFeeList = arguments[1];
-	feeStatusList = ["NEW"];					// Optional: Array of Fee Status to included: NEW, INVOICED. Default is NEW (non-invoiced)
-	if (arguments.length > 2 && arguments[2]) feeStatusList = arguments[2];
-	logDebug("removeAllFees_TPS("+ itemCap + (arguments.length > 1? ",["+exceptionFeeList.join(",")+"]":",null") + (arguments.length > 2? ",["+feeStatusList.join(",")+"]":"") + ") " + arguments.length);
+	exceptionFeeList = []; // Optional: Array of Fee Codes to exclude
+	if (arguments.length > 1 && arguments[1])
+		exceptionFeeList = arguments[1];
+	feeStatusList = ["NEW"]; // Optional: Array of Fee Status to included: NEW, INVOICED. Default is NEW (non-invoiced)
+	if (arguments.length > 2 && arguments[2])
+		feeStatusList = arguments[2];
+	logDebug("removeAllFees_TPS(" + itemCap + (arguments.length > 1 ? ",[" + exceptionFeeList.join(",") + "]" : ",null") + (arguments.length > 2 ? ",[" + feeStatusList.join(",") + "]" : "") + ") " + arguments.length);
 
-    var feeResult = aa.fee.getFeeItems(itemCap);
-    if (!feeResult.getSuccess())
-    { logDebug("**ERROR: getting fee items: " + feeResult.getErrorMessage()); return false; }
+	var feeResult = aa.fee.getFeeItems(itemCap);
+	if (!feeResult.getSuccess()) {
+		logDebug("**ERROR: getting fee items: " + feeResult.getErrorMessage());
+		return false;
+	}
 
 	var feeList = feeResult.getOutput();
 	for (feeNum in feeList) {
@@ -20,8 +24,10 @@ function removeAllFees_TPS(itemCap) { // Removes all non-invoiced fee items for 
 		var feeCode = feeList[feeNum].getFeeCod();
 		var feeStatus = feeList[feeNum].getFeeitemStatus();
 		var feePeriod = feeList[feeNum].getPaymentPeriod();
-		if (exists(feeList[feeNum].getFeeCod(),exceptionFeeList)) 		continue;	// Skip Fees based on Fee Code
-		if (!exists(feeList[feeNum].getFeeitemStatus(),feeStatusList)) 	continue;	// Skip Fees based on Fee Status
+		if (exists(feeList[feeNum].getFeeCod(), exceptionFeeList))
+			continue; // Skip Fees based on Fee Code
+		if (!exists(feeList[feeNum].getFeeitemStatus(), feeStatusList))
+			continue; // Skip Fees based on Fee Status
 		if (feeList[feeNum].getFeeitemStatus().equals("NEW")) {
 			var editResult = aa.finance.removeFeeItem(itemCap, feeSeq);
 			if (editResult.getSuccess()) {
@@ -54,9 +60,7 @@ function removeAllFees_TPS(itemCap) { // Removes all non-invoiced fee items for 
 		if (invoiceResult.getSuccess())
 			logMessage("Invoicing assessed fee items is successful.");
 		else
-			logMessage("**ERROR: Invoicing voided fee items to app # " + itemCap.getCustomID() + " was not successful.  Reason: " +  invoiceResult.getErrorMessage());
+			logMessage("**ERROR: Invoicing voided fee items to app # " + itemCap.getCustomID() + " was not successful.  Reason: " + invoiceResult.getErrorMessage());
 	}
 	return removedFees;
 }
-
- 

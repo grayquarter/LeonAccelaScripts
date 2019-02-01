@@ -4,9 +4,11 @@ function checkChildStatus(parentCapId, childCapType, childCapStatusesExcluded, c
 	// Optional 3rd parameter pChildCapIdSkip: capId of child to skip
 	var children = new Array();
 	var itemCap = capId;
-	if (parentCapId) itemCap = parentCapId;
+	if (parentCapId)
+		itemCap = parentCapId;
 	var childCapIdsSkip = null;
-	if (arguments.length > 4)	var childCapIdsSkip = arguments[4];
+	if (arguments.length > 4)
+		var childCapIdsSkip = arguments[4];
 
 	var typeArray = childCapType.split("/");
 	if (typeArray.length != 4) {
@@ -16,13 +18,13 @@ function checkChildStatus(parentCapId, childCapType, childCapStatusesExcluded, c
 
 	var getCapResult = aa.cap.getChildByMasterID(itemCap);
 	if (!getCapResult.getSuccess()) {
-		logDebug( "**WARNING: checkChildStatus function found no children: " + getCapResult.getErrorMessage());
+		logDebug("**WARNING: checkChildStatus function found no children: " + getCapResult.getErrorMessage());
 		return false;
 	}
 
 	var childArray = getCapResult.getOutput();
 	if (!childArray || childArray.length == 0) {
-		logDebug( "**WARNING: checkChildStatus function found no children");	
+		logDebug("**WARNING: checkChildStatus function found no children");
 		return false;
 	}
 
@@ -32,11 +34,12 @@ function checkChildStatus(parentCapId, childCapType, childCapStatusesExcluded, c
 	var isMatch;
 	for (xx in childArray) {
 		childCapId = childArray[xx].getCapID();
-		if (childCapIdSkip && exists(childCapId,childCapIdsSkip)) continue; //skip over this child
+		if (childCapIdSkip && exists(childCapId, childCapIdsSkip))
+			continue; //skip over this child
 		childCap = aa.cap.getCap(childCapId).getOutput();
 		childTypeResult = childCap.getCapType();
 		childTypeAlias = childTypeResult.getAlias();
-		childTypeString = childTypeResult.toString();	// Convert child cap type to string ("Building/A/B/C")
+		childTypeString = childTypeResult.toString(); // Convert child cap type to string ("Building/A/B/C")
 		childTypeArray = childTypeString.split("/");
 		capName = cap.getSpecialText();
 		childCapStatus = childCap.getCapStatus();
@@ -49,20 +52,24 @@ function checkChildStatus(parentCapId, childCapType, childCapStatusesExcluded, c
 				break;
 			}
 		}
-		if (!isMatch) continue;
+		if (!isMatch)
+			continue;
 
 		if (checkChildBalanceDue) {
 			var childBalanceDue = 0;
-			var childCapDetailObjResult = aa.cap.getCapDetail(childCapId);		
+			var childCapDetailObjResult = aa.cap.getCapDetail(childCapId);
 			if (childCapDetailObjResult.getSuccess()) {
 				childCapDetail = childCapDetailObjResult.getOutput();
 				childBalanceDue = childCapDetail.getBalance();
 			}
-			if (childBalanceDue > 0) { children.push(childCapId); continue }
+			if (childBalanceDue > 0) {
+				children.push(childCapId);
+				continue
+			}
 		}
-		if (childCapStatusesExcluded && exists(childCapStatus,childCapStatusesExcluded)) continue; //skip over children with these statuses
+		if (childCapStatusesExcluded && exists(childCapStatus, childCapStatusesExcluded))
+			continue; //skip over children with these statuses
 		children.push(childCapId);
 	}
 	return children;
 }
-

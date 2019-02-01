@@ -31,4 +31,3 @@ function getConditions(pType, pStatus, pDesc, pImpact) // optional capID
 
 	return conditions;
 }
-

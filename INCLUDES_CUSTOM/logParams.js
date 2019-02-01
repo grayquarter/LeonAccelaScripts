@@ -7,4 +7,3 @@ function logParams() {
 		aa.print("Env Variable: " + key + " = " + aa.env.getValue(key) + newLine);
 	}
 }
-

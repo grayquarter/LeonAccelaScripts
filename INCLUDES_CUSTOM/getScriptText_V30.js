@@ -1,5 +1,6 @@
 function getScriptText_V30(vScriptName, servProvCode, useProductScripts) {
-	if (!servProvCode)  servProvCode = aa.getServiceProviderCode();
+	if (!servProvCode)
+		servProvCode = aa.getServiceProviderCode();
 	vScriptName = vScriptName.toUpperCase();
 	var emseBiz = aa.proxyInvoker.newInstance("com.accela.aa.emse.emse.EMSEBusiness").getOutput();
 	try {

@@ -1,23 +1,28 @@
-function issueCertificate(nextTask,nextStatus,resultTask) {
+function issueCertificate(nextTask, nextStatus, resultTask) {
 	var nextTaskUpdate = false;
 	if (nextTask == null) { // Determine Next Task based on Active Task if not identified.
-		if (isTaskActive("Certificate")) { 
-			nextTask = "Certificate"; nextStatus = "COFO Issued"; 
+		if (isTaskActive("Certificate")) {
+			nextTask = "Certificate";
+			nextStatus = "COFO Issued";
 			var improvementType = AInfo["Improvement Type"];
-			if (exists(appTypeArray[1],["Express"])) nextStatus = "CC Issued";
-			else if (improvementType && exists(improvementType,[""])) nextStatus = "CC Issued";
+			if (exists(appTypeArray[1], ["Express"]))
+				nextStatus = "CC Issued";
+			else if (improvementType && exists(improvementType, [""]))
+				nextStatus = "CC Issued";
 		} // "CC Issued";
 		if (isTaskActive("Certificate of Completeness")) {
-			nextTask = "Certificate of Completeness"; nextStatus = "CC Issued";
+			nextTask = "Certificate of Completeness";
+			nextStatus = "CC Issued";
 		}
 		if (isTaskActive("Certificate of Occupancy")) {
-			nextTask = "Certificate of Occupancy"; nextStatus = "COFO Issued"; 
+			nextTask = "Certificate of Occupancy";
+			nextStatus = "COFO Issued";
 		}
 	}
 	if (nextTask) {
 		// resultTask = isTaskActive(nextTask);
 		if (resultTask) { // Should task be resulted? if so check if it can be then result it.
-			var result = checkWorkflowTaskUpdate_BLD(nextTask,nextStatus,false);
+			var result = checkWorkflowTaskUpdate_BLD(nextTask, nextStatus, false);
 			if (result && result.getSuccess() && result.getErrorType() != "Supervisor Override") {
 				nextTaskUpdate = true;
 			}
@@ -32,21 +37,25 @@ function issueCertificate(nextTask,nextStatus,resultTask) {
 		}
 		// Send Notification Template
 		if (nextTaskUpdate && nextStatus) {
-			var templateName = null, templateParams = aa.util.newHashtable(), reportName = null, reportParams = aa.util.newHashMap(), reportModule = "Building";
-			if (exists(nextStatus,["COFO Issued"])) {
-				templateName = "BLD_CERTIFICATE_OF_OCCUPANCY"; 
+			var templateName = null,
+			templateParams = aa.util.newHashtable(),
+			reportName = null,
+			reportParams = aa.util.newHashMap(),
+			reportModule = "Building";
+			if (exists(nextStatus, ["COFO Issued"])) {
+				templateName = "BLD_CERTIFICATE_OF_OCCUPANCY";
 				reportName = "Certificate of Occupancy";
-			    //addParameter(reportParams,"Record Number", capIDString.toString().trim());
-			    addParameter(reportParams,"permitNo", capIDString.toString().trim());
-			} else if (exists(nextStatus,["CC Issued"])) {
-				templateName = "BLD_CERTIFICATE_OF_COMPLETION"; 
+				//addParameter(reportParams,"Record Number", capIDString.toString().trim());
+				addParameter(reportParams, "permitNo", capIDString.toString().trim());
+			} else if (exists(nextStatus, ["CC Issued"])) {
+				templateName = "BLD_CERTIFICATE_OF_COMPLETION";
 				if (appMatch("Building/Express/*/*")) {
 					reportName = "Express CofC";
 				} else {
 					reportName = "Certificate of Completion";
 				}
 				//addParameter(reportParams,"AltID", capIDString.toString().trim()); // Use Report Parameter Name not Parameter Name for Report configured report.
-				addParameter(reportParams,"Permit Number", capIDString.toString().trim()); // Use configured Parameter Name for Report.
+				addParameter(reportParams, "Permit Number", capIDString.toString().trim()); // Use configured Parameter Name for Report.
 			}
 			if (templateName) {
 				getParams4Notification(templateParams, []); // Add Standard Notification Parameters
@@ -54,9 +63,8 @@ function issueCertificate(nextTask,nextStatus,resultTask) {
 			}
 		}
 		if (!isTaskActive(nextTask)) {
-			inspCancelAll(); 
+			inspCancelAll();
 			closeCap(currentUserID);
 		}
 	}
 }
-

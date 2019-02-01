@@ -1,9 +1,9 @@
 function Fee_TPS() { // Fee Object
 	this.fee = null;
 	this.sequence = null;
-	this.code =  null;
+	this.code = null;
 	this.sched = null; // getFeeSchudle()
-	this.description = null;  // getFeeDescription()
+	this.description = null; // getFeeDescription()
 	this.unit = null; //  getFeeUnit()
 	this.amount = null; //  getFee()
 	this.amountPaid = null;
@@ -34,14 +34,17 @@ function Fee_TPS() { // Fee Object
 		fFee = arguments[0];
 		this.fee = fFee;
 		this.sequence = fFee.getFeeSeqNbr();
-		this.code =  fFee.getFeeCod();
+		this.code = fFee.getFeeCod();
 		this.sched = fFee.getF4FeeItemModel().getFeeSchudle();
 		this.description = fFee.getFeeDescription();
 		this.unit = fFee.getFeeUnit();
 		this.amount = fFee.getFee();
-		if (fFee.getApplyDate()) this.applyDate = convertDate(fFee.getApplyDate());
-		if (fFee.getEffectDate()) this.effectDate = convertDate(fFee.getEffectDate());
-		if (fFee.getExpireDate()) this.expireDate = convertDate(fFee.getExpireDate());
+		if (fFee.getApplyDate())
+			this.applyDate = convertDate(fFee.getApplyDate());
+		if (fFee.getEffectDate())
+			this.effectDate = convertDate(fFee.getEffectDate());
+		if (fFee.getExpireDate())
+			this.expireDate = convertDate(fFee.getExpireDate());
 		this.status = fFee.getFeeitemStatus();
 		this.period = fFee.getPaymentPeriod();
 		this.display = fFee.getDisplay();
@@ -57,9 +60,9 @@ function Fee_TPS() { // Fee Object
 		this.subGroup = fFee.getSubGroup();
 		this.calcFlag = fFee.getCalcFlag();
 		this.calcProc = fFee.getFeeCalcProc();
-		this.auditDate = fFee.getF4FeeItemModel().getAuditDate(); 
-		this.auditID = fFee.getF4FeeItemModel().getAuditID(); 
-		this.auditStatus = fFee.getF4FeeItemModel().getAuditStatus(); 
+		this.auditDate = fFee.getF4FeeItemModel().getAuditDate();
+		this.auditID = fFee.getF4FeeItemModel().getAuditID();
+		this.auditStatus = fFee.getF4FeeItemModel().getAuditStatus();
 		this.version = fFee.getF4FeeItemModel().getVersion();
 
 		var amtPaid = 0;
@@ -70,18 +73,17 @@ function Fee_TPS() { // Fee Object
 				var pfObj = pfResult.getOutput();
 				for (ij in pfObj)
 					if (fFee.getFeeSeqNbr() == pfObj[ij].getFeeSeqNbr())
-						amtPaid+=pfObj[ij].getFeeAllocation()
+						amtPaid += pfObj[ij].getFeeAllocation()
 			}
 		}
 		this.amountPaid = amtPaid;
-		
+
 	}
-	this.getFeeItemModel = function () { 
+	this.getFeeItemModel = function () {
 		return this.fee;
 	}
 
-	this.getF4FeeItemModel = function () { 
+	this.getF4FeeItemModel = function () {
 		return this.fee.getF4FeeItemModel();
 	}
 }
- 

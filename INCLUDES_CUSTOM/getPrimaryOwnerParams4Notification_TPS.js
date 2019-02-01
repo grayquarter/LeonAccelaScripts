@@ -3,8 +3,9 @@ function getPrimaryOwnerParams4Notification_TPS(params) {
 	// Modified from INCLUDES_ACCELA_FUNCTIONS v9.3.0
 	// -- Allows for optional capId
 	// -- If primary owner is not found uses first one if finds.
-    var itemCap = capId;
-	if (arguments.length > 1 && arguments[1]) itemCap = arguments[1]; // Optional CapId
+	var itemCap = capId;
+	if (arguments.length > 1 && arguments[1])
+		itemCap = arguments[1]; // Optional CapId
 
 	thisOwner = null;
 	capOwnerResult = aa.owner.getOwnerByCapId(itemCap);
@@ -13,7 +14,7 @@ function getPrimaryOwnerParams4Notification_TPS(params) {
 		for (o in owner) {
 			thisOwner = owner[o];
 			if (thisOwner.getPrimaryOwner() == "Y") {
-				break;	
+				break;
 			}
 		}
 	}
@@ -25,9 +26,3 @@ function getPrimaryOwnerParams4Notification_TPS(params) {
 
 	return params;
 }
- 
-
-/*------------------------------------------------------------------------------------------------------/
-/ Function to retrieve primary parcel number
-/ IK Consulting, LLC, 3/23/17
-/------------------------------------------------------------------------------------------------------*/

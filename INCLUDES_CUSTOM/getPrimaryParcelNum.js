@@ -1,6 +1,8 @@
+
 function getPrimaryParcelNum() {
-	parcelToUse = null; parcelNum = null;
-	var capParcelResult = aa.parcel.getParcelandAttribute(capId,null);
+	parcelToUse = null;
+	parcelNum = null;
+	var capParcelResult = aa.parcel.getParcelandAttribute(capId, null);
 	if (capParcelResult.getSuccess()) {
 		var Parcels = capParcelResult.getOutput().toArray();
 		for (zz in Parcels) {
@@ -18,4 +20,3 @@ function getPrimaryParcelNum() {
 	}
 	return parcelNum;
 }
- 

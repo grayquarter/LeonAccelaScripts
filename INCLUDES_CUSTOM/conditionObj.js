@@ -1,5 +1,5 @@
- 
-function conditionObj(conObj,conObjTyp,conAssocObj,lang) {
+
+function conditionObj(conObj, conObjTyp, conAssocObj, lang) {
 	this.number = null;
 	this.object = conObj;
 	this.objType = conObjType;
@@ -7,10 +7,14 @@ function conditionObj(conObj,conObjTyp,conAssocObj,lang) {
 	this.contactObj = null;
 	this.licenseObj = null;
 	this.parcelObj = null;
-	if (conObjType == "Address") this.addressObj = conAssocObj;
-	if (conObjType == "Contact") this.contactObj = conAssocObj;
-	if (conObjType == "License") this.licenseObj = conAssocObj;
-	if (conObjType == "Parcel") this.parcelObj = conAssocObj;
+	if (conObjType == "Address")
+		this.addressObj = conAssocObj;
+	if (conObjType == "Contact")
+		this.contactObj = conAssocObj;
+	if (conObjType == "License")
+		this.licenseObj = conAssocObj;
+	if (conObjType == "Parcel")
+		this.parcelObj = conAssocObj;
 	this.status = null;
 	this.group = null;
 	this.type = null;
@@ -36,11 +40,15 @@ function conditionObj(conObj,conObjTyp,conAssocObj,lang) {
 		this.arDescription = langCond.getResConditionDescription();
 		this.arComment = langCond.getResConditionComment();
 	}
-	if (this.type)			this.type = " ";
-	if (this.status)		this.status = " ";
-	if (this.description)	this.description = " ";
-	if (this.impact)		this.impact = " ";
-	this.getConditionModel() = function() {
+	if (this.type)
+		this.type = " ";
+	if (this.status)
+		this.status = " ";
+	if (this.description)
+		this.description = " ";
+	if (this.impact)
+		this.impact = " ";
+	this.getConditionModel() = function () {
 		return this.object;
 	}
 }

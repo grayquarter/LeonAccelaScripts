@@ -1,19 +1,17 @@
-function getRefLicenseProfWithType(refstlic,licType)
-	{
+function getRefLicenseProfWithType(refstlic, licType) {
 	var refLicObj = null;
-	var refLicenseResult = aa.licenseScript.getRefLicensesProfByLicNbr(aa.getServiceProviderCode(),refstlic);
-	if (!refLicenseResult.getSuccess())
-		{ logDebug("**ERROR retrieving Ref Lic Profs : " + refLicenseResult.getErrorMessage()); return false; }
-	else
-		{
+	var refLicenseResult = aa.licenseScript.getRefLicensesProfByLicNbr(aa.getServiceProviderCode(), refstlic);
+	if (!refLicenseResult.getSuccess()) {
+		logDebug("**ERROR retrieving Ref Lic Profs : " + refLicenseResult.getErrorMessage());
+		return false;
+	} else {
 		var newLicArray = refLicenseResult.getOutput();
-		if (!newLicArray) return null;
+		if (!newLicArray)
+			return null;
 		for (var thisLic in newLicArray)
 			if (refstlic && newLicArray[thisLic] && refstlic.toUpperCase().equals(newLicArray[thisLic].getStateLicense().toUpperCase()) && licType.toUpperCase().equals(newLicArray[thisLic].getLicenseType().toUpperCase()))
 				refLicObj = newLicArray[thisLic];
-		}
-
-	return refLicObj;
 	}
 
- 
+	return refLicObj;
+}

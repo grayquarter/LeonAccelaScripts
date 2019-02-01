@@ -5,24 +5,32 @@ function conditionObjects() {
 	var pDesc = null;
 	var pImpact = null;
 	this.capId = capId;
-	if (arguments.length > 0) pType = arguments[0]; 		// use condition type
-	if (arguments.length > 1) pStatus = arguments[1]; 		// use condition status
-	if (arguments.length > 2) pDesc = arguments[2]; 		// use condition description
-	if (arguments.length > 3) pImpact = arguments[3]; 		// use condition impact
-	if (arguments.length > 4) this.capId = arguments[4];	// use cap ID specified in args
+	if (arguments.length > 0)
+		pType = arguments[0]; // use condition type
+	if (arguments.length > 1)
+		pStatus = arguments[1]; // use condition status
+	if (arguments.length > 2)
+		pDesc = arguments[2]; // use condition description
+	if (arguments.length > 3)
+		pImpact = arguments[3]; // use condition impact
+	if (arguments.length > 4)
+		this.capId = arguments[4]; // use cap ID specified in args
 
 	this.lang = "en_US";
 	var bizDomainModel4Lang = aa.bizDomain.getBizDomainByValue("I18N_SETTINGS", "I18N_DEFAULT_LANGUAGE");
-	if (bizDomainModel4Lang.getSuccess()) this.lang = bizDomainModel4Lang.getOutput().getDescription();
-	
-	this.getConditions = function() {	// Get Error Message
+	if (bizDomainModel4Lang.getSuccess())
+		this.lang = bizDomainModel4Lang.getOutput().getDescription();
+
+	this.getConditions = function () { // Get Error Message
 		return this.conditions;
 	}
-	this.getCAPConditions = function(pType, pStatus, pDesc, pImpact) {	// Get Error Message
+	this.getCAPConditions = function (pType, pStatus, pDesc, pImpact) { // Get Error Message
 		var itemCap = capId;
 		var resultArray = new Array();
-		if (arguments.length > 4) itemCap = arguments[4]; // use cap ID specified in args
-		if (arguments.length > 5) resultArray = arguments[5]; // use condition array specified in args
+		if (arguments.length > 4)
+			itemCap = arguments[4]; // use cap ID specified in args
+		if (arguments.length > 5)
+			resultArray = arguments[5]; // use condition array specified in args
 
 		////////////////////////////////////////
 		// Check Records
@@ -48,13 +56,16 @@ function conditionObjects() {
 			var cComment = thisCond.getConditionComment();
 			var cExpireDate = thisCond.getExpireDate();
 
-			if (cStatus == null)	cStatus = " ";
-			if (cDesc == null)		cDesc = " ";
-			if (cImpact == null)	cImpact = " ";
+			if (cStatus == null)
+				cStatus = " ";
+			if (cDesc == null)
+				cDesc = " ";
+			if (cImpact == null)
+				cImpact = " ";
 			//Look for matching condition
 
 			if ((pStatus == null || pStatus.toUpperCase().equals(cStatus.toUpperCase())) && (pDesc == null || pDesc.toUpperCase().equals(cDesc.toUpperCase())) && (pImpact == null || pImpact.toUpperCase().equals(cImpact.toUpperCase()))) {
-				var r = new conditionObj(thisCond,"Record",licArray[thisLic],this.lang);
+				var r = new conditionObj(thisCond, "Record", licArray[thisLic], this.lang);
 				resultArray.push(r);
 				this.conditions.push(r);
 			}
@@ -62,11 +73,13 @@ function conditionObjects() {
 
 		return resultArray;
 	}
-	this.getAddressConditions = function(pType, pStatus, pDesc, pImpact) {	// Get Error Message
+	this.getAddressConditions = function (pType, pStatus, pDesc, pImpact) { // Get Error Message
 		var itemCap = capId;
 		var resultArray = new Array();
-		if (arguments.length > 4) itemCap = arguments[4]; // use cap ID specified in args
-		if (arguments.length > 5) resultArray = arguments[5]; // use condition array specified in args
+		if (arguments.length > 4)
+			itemCap = arguments[4]; // use cap ID specified in args
+		if (arguments.length > 5)
+			resultArray = arguments[5]; // use condition array specified in args
 
 		////////////////////////////////////////
 		// Check Address
@@ -85,43 +98,48 @@ function conditionObjects() {
 		for (var thisAddr in addrArray) {
 			if (addrArray[thisAddr].getRefAddressId()) {
 				addCondResult = aa.addressCondition.getAddressConditions(addrArray[thisAddr].getRefAddressId())
-				if (!addCondResult.getSuccess()) {
-					logDebug("**WARNING: getting Address Conditions : " + addCondResult.getErrorMessage());
-					var addrCondArray = new Array();
-				} else {
-					var addrCondArray = addCondResult.getOutput();
-				}
-
-				for (var thisAddrCond in addrCondArray) {
-					var thisCond = addrCondArray[thisAddrCond];
-					var cStatus = thisCond.getConditionStatus();
-					var cDesc = thisCond.getConditionDescription();
-					var cImpact = thisCond.getImpactCode();
-					var cType = thisCond.getConditionType();
-					var cComment = thisCond.getConditionComment();
-					var cExpireDate = thisCond.getExpireDate();
-
-					if (cStatus == null)	cStatus = " ";
-					if (cDesc == null)		cDesc = " ";
-					if (cImpact == null)	cImpact = " ";
-					//Look for matching condition
-
-					if ((pStatus == null || pStatus.toUpperCase().equals(cStatus.toUpperCase())) && (pDesc == null || pDesc.toUpperCase().equals(cDesc.toUpperCase())) && (pImpact == null || pImpact.toUpperCase().equals(cImpact.toUpperCase()))) {
-						var r = new conditionObj(thisCond,"Address",addrArray[thisAddr],this.lang);
-						resultArray.push(r);
-						this.conditions.push(r);
+					if (!addCondResult.getSuccess()) {
+						logDebug("**WARNING: getting Address Conditions : " + addCondResult.getErrorMessage());
+						var addrCondArray = new Array();
+					} else {
+						var addrCondArray = addCondResult.getOutput();
 					}
-				}
+
+					for (var thisAddrCond in addrCondArray) {
+						var thisCond = addrCondArray[thisAddrCond];
+						var cStatus = thisCond.getConditionStatus();
+						var cDesc = thisCond.getConditionDescription();
+						var cImpact = thisCond.getImpactCode();
+						var cType = thisCond.getConditionType();
+						var cComment = thisCond.getConditionComment();
+						var cExpireDate = thisCond.getExpireDate();
+
+						if (cStatus == null)
+							cStatus = " ";
+						if (cDesc == null)
+							cDesc = " ";
+						if (cImpact == null)
+							cImpact = " ";
+						//Look for matching condition
+
+						if ((pStatus == null || pStatus.toUpperCase().equals(cStatus.toUpperCase())) && (pDesc == null || pDesc.toUpperCase().equals(cDesc.toUpperCase())) && (pImpact == null || pImpact.toUpperCase().equals(cImpact.toUpperCase()))) {
+							var r = new conditionObj(thisCond, "Address", addrArray[thisAddr], this.lang);
+							resultArray.push(r);
+							this.conditions.push(r);
+						}
+					}
 			}
 		}
 
 		return resultArray;
 	}
-	this.getContactConditions = function(pType, pStatus, pDesc, pImpact) {
+	this.getContactConditions = function (pType, pStatus, pDesc, pImpact) {
 		var itemCap = capId;
 		var resultArray = new Array();
-		if (arguments.length > 4) itemCap = arguments[4]; // use cap ID specified in args
-		if (arguments.length > 5) resultArray = arguments[5]; // use condition array specified in args
+		if (arguments.length > 4)
+			itemCap = arguments[4]; // use cap ID specified in args
+		if (arguments.length > 5)
+			resultArray = arguments[5]; // use condition array specified in args
 
 		////////////////////////////////////////
 		// Check Contacts
@@ -157,13 +175,16 @@ function conditionObjects() {
 					var cComment = thisCond.getConditionComment();
 					var cExpireDate = thisCond.getExpireDate();
 
-					if (cStatus == null)	cStatus = " ";
-					if (cDesc == null)		cDesc = " ";
-					if (cImpact == null)	cImpact = " ";
+					if (cStatus == null)
+						cStatus = " ";
+					if (cDesc == null)
+						cDesc = " ";
+					if (cImpact == null)
+						cImpact = " ";
 					//Look for matching condition
 
 					if ((pStatus == null || pStatus.toUpperCase().equals(cStatus.toUpperCase())) && (pDesc == null || pDesc.toUpperCase().equals(cDesc.toUpperCase())) && (pImpact == null || pImpact.toUpperCase().equals(cImpact.toUpperCase()))) {
-						var r = new conditionObj(thisCond,"Contact",addrArray[thisAddr],this.lang);
+						var r = new conditionObj(thisCond, "Contact", addrArray[thisAddr], this.lang);
 						resultArray.push(r);
 						this.conditions.push(r);
 					}
@@ -173,11 +194,13 @@ function conditionObjects() {
 
 		return resultArray;
 	}
-	this.getLicenseConditions = function(pType, pStatus, pDesc, pImpact) {
+	this.getLicenseConditions = function (pType, pStatus, pDesc, pImpact) {
 		var itemCap = capId;
 		var resultArray = new Array();
-		if (arguments.length > 4) itemCap = arguments[4]; // use cap ID specified in args
-		if (arguments.length > 5) resultArray = arguments[5]; // use condition array specified in args
+		if (arguments.length > 4)
+			itemCap = arguments[4]; // use cap ID specified in args
+		if (arguments.length > 5)
+			resultArray = arguments[5]; // use condition array specified in args
 
 		////////////////////////////////////////
 		// Check License
@@ -213,13 +236,16 @@ function conditionObjects() {
 					var cComment = thisCond.getConditionComment();
 					var cExpireDate = thisCond.getExpireDate();
 
-					if (cStatus == null)	cStatus = " ";
-					if (cDesc == null)		cDesc = " ";
-					if (cImpact == null)	cImpact = " ";
+					if (cStatus == null)
+						cStatus = " ";
+					if (cDesc == null)
+						cDesc = " ";
+					if (cImpact == null)
+						cImpact = " ";
 					//Look for matching condition
 
 					if ((pStatus == null || pStatus.toUpperCase().equals(cStatus.toUpperCase())) && (pDesc == null || pDesc.toUpperCase().equals(cDesc.toUpperCase())) && (pImpact == null || pImpact.toUpperCase().equals(cImpact.toUpperCase()))) {
-						var r = new conditionObj(thisCond,"License",licArray[thisLic],this.lang);
+						var r = new conditionObj(thisCond, "License", licArray[thisLic], this.lang);
 						resultArray.push(r);
 						this.conditions.push(r);
 					}
@@ -229,11 +255,13 @@ function conditionObjects() {
 
 		return resultArray;
 	}
-	this.getParcelConditions = function(pType, pStatus, pDesc, pImpact) {
+	this.getParcelConditions = function (pType, pStatus, pDesc, pImpact) {
 		var itemCap = capId;
 		var resultArray = new Array();
-		if (arguments.length > 4) itemCap = arguments[4]; // use cap ID specified in args
-		if (arguments.length > 5) resultArray = arguments[5]; // use condition array specified in args
+		if (arguments.length > 4)
+			itemCap = arguments[4]; // use cap ID specified in args
+		if (arguments.length > 5)
+			resultArray = arguments[5]; // use condition array specified in args
 
 		////////////////////////////////////////
 		// Check Parcel
@@ -252,33 +280,36 @@ function conditionObjects() {
 		for (var thisParc in parcArray) {
 			if (parcArray[thisParc].getParcelNumber()) {
 				parcCondResult = aa.parcelCondition.getParcelConditions(parcArray[thisParc].getParcelNumber())
-				if (!parcCondResult.getSuccess()) {
-					logDebug("**WARNING: getting Parcel Conditions : " + parcCondResult.getErrorMessage());
-					var parcCondArray = new Array();
-				} else {
-					var parcCondArray = parcCondResult.getOutput();
-				}
-
-				for (var thisParcCond in parcCondArray) {
-					var thisCond = parcCondArray[thisParcCond];
-					var cStatus = thisCond.getConditionStatus();
-					var cDesc = thisCond.getConditionDescription();
-					var cImpact = thisCond.getImpactCode();
-					var cType = thisCond.getConditionType();
-					var cComment = thisCond.getConditionComment();
-					var cExpireDate = thisCond.getExpireDate();
-
-					if (cStatus == null)	cStatus = " ";
-					if (cDesc == null)		cDesc = " ";
-					if (cImpact == null)	cImpact = " ";
-					//Look for matching condition
-
-					if ((pStatus == null || pStatus.toUpperCase().equals(cStatus.toUpperCase())) && (pDesc == null || pDesc.toUpperCase().equals(cDesc.toUpperCase())) && (pImpact == null || pImpact.toUpperCase().equals(cImpact.toUpperCase()))) {
-						var r = new conditionObj(thisCond,"Parcel",parcArray[thisParc],this.lang);
-						resultArray.push(r);
-						this.conditions.push(r);
+					if (!parcCondResult.getSuccess()) {
+						logDebug("**WARNING: getting Parcel Conditions : " + parcCondResult.getErrorMessage());
+						var parcCondArray = new Array();
+					} else {
+						var parcCondArray = parcCondResult.getOutput();
 					}
-				}
+
+					for (var thisParcCond in parcCondArray) {
+						var thisCond = parcCondArray[thisParcCond];
+						var cStatus = thisCond.getConditionStatus();
+						var cDesc = thisCond.getConditionDescription();
+						var cImpact = thisCond.getImpactCode();
+						var cType = thisCond.getConditionType();
+						var cComment = thisCond.getConditionComment();
+						var cExpireDate = thisCond.getExpireDate();
+
+						if (cStatus == null)
+							cStatus = " ";
+						if (cDesc == null)
+							cDesc = " ";
+						if (cImpact == null)
+							cImpact = " ";
+						//Look for matching condition
+
+						if ((pStatus == null || pStatus.toUpperCase().equals(cStatus.toUpperCase())) && (pDesc == null || pDesc.toUpperCase().equals(cDesc.toUpperCase())) && (pImpact == null || pImpact.toUpperCase().equals(cImpact.toUpperCase()))) {
+							var r = new conditionObj(thisCond, "Parcel", parcArray[thisParc], this.lang);
+							resultArray.push(r);
+							this.conditions.push(r);
+						}
+					}
 			}
 		}
 
@@ -286,12 +317,11 @@ function conditionObjects() {
 	}
 
 	if (arguments.length > 0) { // Object Constructor populate conditions array based on arguments.
-		this.conditions = this.getCAPConditions(pType, pStatus, pDesc, pImpact,this.capId,this.conditions);
-		this.conditions = this.getAddressConditions(pType, pStatus, pDesc, pImpact,this.capId,this.conditions);
-		this.conditions = this.getParcelConditions(pType, pStatus, pDesc, pImpact,this.capId,this.conditions);
-		this.conditions = this.getContactConditions(pType, pStatus, pDesc, pImpact,this.capId,this.conditions);
-		this.conditions = this.getLicenseConditions(pType, pStatus, pDesc, pImpact,this.capId,this.conditions);
+		this.conditions = this.getCAPConditions(pType, pStatus, pDesc, pImpact, this.capId, this.conditions);
+		this.conditions = this.getAddressConditions(pType, pStatus, pDesc, pImpact, this.capId, this.conditions);
+		this.conditions = this.getParcelConditions(pType, pStatus, pDesc, pImpact, this.capId, this.conditions);
+		this.conditions = this.getContactConditions(pType, pStatus, pDesc, pImpact, this.capId, this.conditions);
+		this.conditions = this.getLicenseConditions(pType, pStatus, pDesc, pImpact, this.capId, this.conditions);
 	}
 
 }
-
